@@ -34,6 +34,10 @@ ip route 0.0.0.0/0 {{ MGMT_INTERFACE[(name, prefix)]['gwaddr'] }} 200
 {% endif %}
 {% endfor %}
 {% endblock default_route %}
+! static route
+{% for (route, exit) in ROUTE_TABLE.keys() | sort %}
+ip route {{route}} {{exit}} {{ ROUTE_TABLE[(route, exit)]['ad'] }}
+{% endfor %}
 !
 {% block source_loopback %}
 {% set lo_ipv4_addrs = [] %}
